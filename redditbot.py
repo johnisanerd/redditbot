@@ -26,13 +26,15 @@ question_replies = [
                     "Wish I could help!  Sounds like a cool project!",
                     "Great project idea.",
                     "This is super cool. Wish I could help!",
-                    "Good luck on this one!"
+                    "Good luck on this one!",
+                    "Great project idea, I'd like to see more like this."
                     ]
 
 project_replies = [
                     "Cool project, nice work!",
                     "This project is fabulous.",
                     "Legendary project!",
+                    "Awesome project, wish I could help!",
                     "This is very useful information.  Thanks!",
                     "Great project!"
                     ]
@@ -75,14 +77,20 @@ while True:
                     submission.reply(submit_text)
                     with open("posts_replied_to.txt", "a") as f:
                         f.write(submission.id + "\n")
+                    # Post was submitted!  Rest for 9.5 minutes.
+                    time.sleep(10)
                     not_submitted = False
+                # If we get a rate limit exception, then we need to figure out how long to wait
+                # and then wait that long.
                 except praw.exceptions.APIException as e:
                     debug_api("Exception: " + str(e))
+                    # If the error has the word "minute" in it, we just wait a number of minutes.
                     if(str(e).find("minute") > 0):
                         position = str(e).find("minutes")
                         sleep_minutes = int(filter(str.isdigit, str(e)))
                         print("Sleeping minutes: " + str(sleep_minutes))
-                        time.sleep((sleep_minutes*60)+5)
+                        time.sleep((sleep_minutes*60)+60)
+                    # If the error has the word "seconds" in it, we just wait a number of seconds.
                     elif(str(e).find("seconds") > 0):
                         sleep_seconds_int = int(filter(str.isdigit, str(e)))
                         print("Sleeping seconds: " + str(sleep_seconds_int))
@@ -96,9 +104,9 @@ while True:
                 else:
                     debug_api("Exception . . . not sure what happened.")
         else:
-            print("Found a Post:  Already submitted to this one.")
+            print("Found a Post:  Already submitted to this one. " + str(submission.id))
 
-    print("Checked.  Sleeping for 10 minutes.")
+    print("Checked the latest.  Sleeping for 10 minutes.")
     time.sleep(10*60)
 #if __name__ == '__main__':
 #    main()

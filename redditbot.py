@@ -15,27 +15,37 @@ def debug_api(string_in):
     if debug_api_on:
         print("Debug API: # " + string_in)
 
-reddit = praw.Reddit('bot1', user_agent='Social_Bot_1.0')
-subreddit = reddit.subreddit("RASPBERRY_PI_PROJECTS")
+reddit = praw.Reddit('bot1', user_agent='Happiness_Project_1.0')
+
+posts_replied_to = []
 
 print("#######")
 print(reddit.user.me())
+
+
 
 # Vague replies to questions.
 question_replies = [
                     "Wish I could help!  Sounds like a cool project!",
                     "Great project idea.",
-                    "This is super cool. Wish I could help!",
+                    "This is super cool. Wish I had time to help!",
+                    "Wish I had more free time to make things like this.",
                     "Good luck on this one!",
                     "Great project idea, I'd like to see more like this."
                     ]
 
 project_replies = [
                     "Cool project, nice work!",
+                    "Mad high fives!",
                     "This project is fabulous.",
                     "Legendary project!",
                     "Awesome project, wish I could help!",
-                    "This is very useful information.  Thanks!",
+                    "Pretty useful information.  Thanks!",
+                    "Fabulous!",
+                    "Very cool!  Keep up the good work!",
+                    "Nice description.",
+                    "Supercool",
+                    "bangin project mate!!"
                     "Great project!"
                     ]
 
@@ -49,15 +59,20 @@ def reply_on_project(text):
 def remove_non_ascii_1(text):
     return ''.join([i if ord(i) < 128 else ' ' for i in text])
 
-with open("posts_replied_to.txt", "r") as f:
-    posts_replied_to = f.read()
-    posts_replied_to = posts_replied_to.split("\n")
-    posts_replied_to = list(filter(None, posts_replied_to))
+def check_posts_replied_to():
+    global posts_replied_to
+    with open("posts_replied_to.txt", "r") as f:
+        posts_replied_to = f.read()
+        posts_replied_to = posts_replied_to.split("\n")
+        posts_replied_to = list(filter(None, posts_replied_to))
 
-print posts_replied_to
+    # print posts_replied_to
 
-while True:
+def subreddit_check(subreddit_in):
     # Get the new subreddits.
+    check_posts_replied_to()
+    print("STARTING NEW SUBREDDIT: " + str(subreddit_in))
+    subreddit = reddit.subreddit(subreddit_in)
     # Check which subreddits have replies.
     # Reply to any subreddits that don't have replies.
     for submission in subreddit.new(limit=25):
@@ -99,14 +114,23 @@ while True:
                         debug_api("Sleeping 10 seconds")
                         time.sleep(10)
                 except Exception as e:
-                    print("Unknown exception:")
-                    print(str(e))
-                else:
-                    debug_api("Exception . . . not sure what happened.")
-        else:
-            print("Found a Post:  Already submitted to this one. " + str(submission.id))
+                    if str(e).find("received 403 HTTP response"):
+                        print("Got a 403 Response")
+                    else:
+                        print("Unknown exception:")
+                        print(str(e))
+                # else:
+                #    debug_api("Exception . . . not sure what happened.")
+        # else:
+        #    print("Found a Post:  Already submitted to this one. " + str(submission.id))
 
-    print("Checked the latest.  Sleeping for 10 minutes.")
-    time.sleep(10*60)
+    print("Checked the latest.  Sleeping for 1 minutes.")
+    time.sleep(1*60)
+
+while True:
+    subreddit_check("RASPBERRY_PI_PROJECTS")
+    subreddit_check("somethingimade")
+    subreddit_check("diyelectronics")
+    # subreddit_check("diy")
 #if __name__ == '__main__':
 #    main()

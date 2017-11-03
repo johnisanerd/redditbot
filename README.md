@@ -1,6 +1,9 @@
 # Happiness Project
+The internet is a cynical and unhappy place.  At best your comments are met with silence.  At worst your comments are lambasted and ridiculed.  
 
-Use the python API praw to say nice things about people's projects in:
+This project uses the praw python API to say nice things about people's projects, pictures, and comments.  Spread robot-generated happiness on the internet!
+
+## Subreddits
 * /r/RASPBERRY_PI_PROJECTS
 * /r/somethingimade
 * /r/diyelectronics/

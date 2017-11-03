@@ -23,7 +23,9 @@ Use the python API praw to say nice things about people's projects in:
 3. In Raspberry_Pi:  Comment on links shared (To avoid questions or rants).  Now it filters out only for submitted projects.
 
 ## Improvements:
-8. Compliment people on their English "Sorry for my English" -> "You have great English!"
+8. Tell people they are welcome if they say "Thank You."  Maybe add another compliment.
+9. Break your compliments into a mad-lib comment generator.
+9. Compliment people on their English "Sorry for my English" -> "You have great English!"
 6. Save the comment ID in another file for using it later.
 7. Create a readme that shows our work: all the threads replied to!
 9. Plot your karma over time.

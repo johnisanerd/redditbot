@@ -27,7 +27,9 @@ This project uses the praw python API to say nice things about people's projects
 
 ## Improvements:
 9. Plot your karma, bannings, postings over time.
-8. Tell people they are welcome if they say "Thank You."  Maybe add another compliment.
+10.  Direct Message Responses:
+   * Tell people they are welcome if they say "Thank You."  Maybe add another compliment.
+   * If a DM contains "Robot" or "bot" write a random phrase back about being a human.
 11.  Add in natural language processing to decide sentiment, generate a quick response.
 9. Break your compliments into a mad-lib comment generator.
 9. Compliment people on their English "Sorry for my English" -> "You have great English!"
